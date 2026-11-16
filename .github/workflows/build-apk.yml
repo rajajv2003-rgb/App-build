@@ -35,11 +35,12 @@ jobs:
           pip install "buildozer==1.5.0" "Cython==0.29.37" setuptools wheel virtualenv
 
       - name: Build Android APK
-        run: |
-          ANDROID_NDK="$ANDROID_NDK_LATEST_HOME" tools/build_llama_android.sh
-          mkdir -p ~/.android
-          cp ci/debug.keystore ~/.android/debug.keystore
-          buildozer -v android debug
+  run: |
+    chmod +x tools/build_llama_android.sh
+    ANDROID_NDK="$ANDROID_NDK_LATEST_HOME" bash tools/build_llama_android.sh
+    mkdir -p ~/.android
+    cp ci/debug.keystore ~/.android/debug.keystore
+    buildozer -v android debug
 
       - uses: actions/upload-artifact@v4
         with:
